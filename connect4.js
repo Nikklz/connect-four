@@ -1,3 +1,14 @@
+var playerInfo = prompt("Your name", "");
+// console.log('--> ',playerInfo == '' );
+if (playerInfo == "") {
+    let alertText = "Not today, buddy.";
+    alert(alertText);
+} else {
+
+    let alertText = "Hello " + playerInfo + "! Let's get started!";
+    alert(alertText);
+}
+
 class Table {
   constructor(width,height,content = () =>0){
     this.width = width;
@@ -254,7 +265,7 @@ function checkLeft(x, y) {
           checkLL(x, y);
           checkLR(x, y);
             if (downCounter >= 4 || (leftCounter+rightCounter)-1 >= 4 || (urCounter + lrCounter)-1 >= 4 || (lrCounter + urCounter)-1 >= 4) {
-              console.log("Player " + player + " is the winner!");
+              alert("Player " + player + " is the winner!");
                 }
             else {
             if (player === 1) {player = 2}
