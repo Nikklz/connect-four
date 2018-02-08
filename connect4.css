@@ -24,5 +24,7 @@ table{
 	color: white;
 	padding-top: 20px;
 }
-
+@-ms-viewport{
+  width: device-width;
+}
 

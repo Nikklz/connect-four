@@ -1,5 +1,5 @@
 
-Unit 1 Projet: Connect Four
+Unit 1 Project: Connect Four
 By: 	Nicole Zelingher
 Due: 	02.07.2018
 ─
