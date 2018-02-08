@@ -23,9 +23,17 @@ let table = new Table(6,7);
 let player = 1;
 let row_max = 6;
 let col_max= 7;
+let id = 1;
+
+newgame();
+
+function newgame(){
+  new Table;
+  addPiece((Math.floor(Math.random()*2)+1))
+    if (player === 1) {player = 2}
+    else {player = 1}
 
 function addPiece(col, player) {
-  // console.log("adding piece")
   if (table.get(6,col)===0) {
     table.set(6,col,player);
     if(player === 1) {
@@ -62,11 +70,6 @@ function addPiece(col, player) {
     $("#i"+0+col).css("background-color", "red");} 
     else {    $("#i"+0+col).css("background-color", "yellow");} 
      checkWin(1, col);}
-  // } else if (table.get(0,col)===0) {
-  //   console.log("weird")
-  //   table.set(0,col,player)
-  //    checkWin(0, col); 
-  // } 
   else {
     alert("Column is full, try again!")  }    
   }
@@ -83,61 +86,53 @@ C.addEventListener("click",function () {addPiece(2,player)});
 let D = document.getElementById("i03");
 D.addEventListener("click",function () {
                                         addPiece(3,player)});
-
 let E = document.getElementById("i04");
 E.addEventListener("click",function() {
                                        addPiece(4,player)});
-
 let F = document.getElementById("i05");
 F.addEventListener("click",function() {
                                       addPiece(5,player)});
-
 let G = document.getElementById("i06");
 G.addEventListener("click", function() {
   addPiece(6, player)});
 
-  function checkDown(x, y) {
-    downCounter = 1;
-    let stop = false;
-    let myX = x;
-    let limit = row_max - x;
-  
-    while (stop === false) {
-      if(downCounter - 1 === limit) {
-                            
-        break;
-      }
-      if(table.get(myX + 1, y) === player) {
-        downCounter = downCounter + 1;
-        myX = myX + 1;
+function checkDown(x, y) {
+ downCounter = 1;
+  let stop = false;
+  let myX = x;
+  let limit = row_max - x;
+  while (stop === false) {
+  if(downCounter - 1 === limit) {
+    break;
+    }
+    if(table.get(myX + 1, y) === player) {
+      downCounter = downCounter + 1;
+      myX = myX + 1;
       }
       else {
-        stop = true;
+      stop = true;
       }
     }
   }
 
-  function checkLeft(x, y) {
-    leftCounter = 1;
-    let stop = false;
-    let myY = y;
-    let limit = y;
-    while (stop === false) {
-      console.log("left counter" + leftCounter);
-      console.log("limit " + limit)
-      if(leftCounter - 1 === limit) {
-        console.log("entered break");
+function checkLeft(x, y) {
+  leftCounter = 1;
+  let stop = false;
+  let myY = y;
+  let limit = y;
+  while (stop === false) {
+    if(leftCounter - 1 === limit) {
         break;
       }
       if(table.get(x, myY-1) === player) {
         leftCounter = leftCounter + 1;
         myY = myY - 1;
-      }
-      else {
-        stop = true;
+        }
+        else {
+          stop = true;
+        }
       }
     }
-  }
 
   function checkRight(x, y) {
     rightCounter = 1;
@@ -164,107 +159,110 @@ G.addEventListener("click", function() {
     let myY = y;
     let myX = x;
     let limit;
-    if ((col_max - y) < x) {
-      let limit = (col_max - y)}
+      if ((col_max - y) < x) {
+        let limit = (col_max - y)}
       else {
         let limit = x}
-        while (stop === false) {
-          if(urCounter - 1 === limit){
+      while (stop === false) {
+      if(urCounter - 1 === limit){
+        break;}
+      if(table.get(myX - 1, myY + 1)===player){
+        urCounter = urCounter + 1;
+        myY = myY + 1;
+        myX = myX - 1}
+      else{
+        stop = true;
+      }
+    }
+  }
+         
+    function checkUL(x,y){
+      ulCounter = 1;
+      let stop = false;
+      let myY = y;
+      let myX = x;
+      let limit;
+        if (x < y){
+          let limit = x}
+        else {
+          let limit = y}
+        while (stop === false){
+        if (ulCounter - 1 === limit){
+          break;}
+        if(table.get(myX - 1, myY - 1)===player){
+          ulCounter = ulCounter + 1;
+          myX = myX - 1;
+          myY = myY - 1}
+        else{
+          stop = true;
+        }
+      }
+    }
+                  
+      function checkLL(x,y){
+        llCounter = 1;
+        let stop = false;
+        let myY = y;
+        let myX = x;
+        let limit;
+          if (row_max - x < y){
+            let limit = row_max - x}
+          else {
+            let limit = y}
+          while (stop === false){
+          if (llCounter - 1 === limit){
             break;}
-            if(table.get(myX - 1, myY + 1)===player){
-              urCounter = urCounter + 1;
-              myY = myY + 1;
-              myX = myX - 1}
-              else{
-                stop = true;
-              }
+          if(table.get(myX + 1, myY - 1)===player){
+            llCounter = llCounter + 1;
+            myX = myX + 1;
+            myY = myY - 1}
+          else{
+            stop = true;
+          }
+        }
+      }
+                          
+        function checkLR(x,y){
+          lrCounter = 1;
+          let stop = false;
+          let myY = y;
+          let myX = x;
+          let limit;
+            if (row_max - x < col_max - y){
+              let limit = row_max - x}
+            else {
+              let limit = col_max - y}
+            while (stop === false){
+            if (lrCounter - 1 === limit){
+              break;}
+            if(table.get(myX + 1, myY - 1)===player){
+              lrCounter = lrCounter + 1;
+              myX = myX + 1;
+              myY = myY - 1}
+            else{
+              stop = true;
             }
           }
-          function checkUL(x,y){
-            ulCounter = 1;
-            let stop = false;
-            let myY = y;
-            let myX = x;
-            let limit;
-            if (x < y){
-              let limit = x}
-              else {
-                let limit = y}
-                while (stop === false){
-                  if (ulCounter - 1 === limit){
-                    break;}
-                    if(table.get(myX - 1, myY - 1)===player){
-                      ulCounter = ulCounter + 1;
-                      myX = myX - 1;
-                      myY = myY - 1}
-                      else{
-                        stop = true;
-                      }
-                    }
-                  }
-                  function checkLL(x,y){
-                    llCounter = 1;
-                    let stop = false;
-                    let myY = y;
-                    let myX = x;
-                    let limit;
-                    if (row_max - x < y){
-                      let limit = row_max - x}
-                      else {
-                        let limit = y}
-                        while (stop === false){
-                          if (llCounter - 1 === limit){
-                            break;}
-                            if(table.get(myX + 1, myY - 1)===player){
-                              llCounter = llCounter + 1;
-                              myX = myX + 1;
-                              myY = myY - 1}
-                              else{
-                                stop = true;
-                              }
-                            }
-                          }
-                          function checkLR(x,y){
-                            lrCounter = 1;
-                            let stop = false;
-                            let myY = y;
-                            let myX = x;
-                            let limit;
-                            if (row_max - x < col_max - y){
-                              let limit = row_max - x}
-                              else {
-                                let limit = col_max - y}
-                                while (stop === false){
-                                  if (lrCounter - 1 === limit){
-                                    break;}
-                                    if(table.get(myX + 1, myY - 1)===player){
-                                      lrCounter = lrCounter + 1;
-                                      myX = myX + 1;
-                                      myY = myY - 1}
-                                      else{
-                                        stop = true;
-                                      }
-                                    }
-                                  }
+        }
 
-                                  function checkWin(x, y){
-                                    checkDown(x, y);
-                                    checkLeft(x, y);
-                                    checkRight(x, y);
-                                    checkUR(x, y);
-                                    checkUL(x, y);
-                                    checkLL(x, y);
-                                    checkLR(x, y);
-                                    if (downCounter >= 4 || (leftCounter+rightCounter)-1 >= 4 || (urCounter + lrCounter)-1 >= 4 || (lrCounter + urCounter)-1 >= 4) {
-                                      console.log("Player " + player + " is the winner!");
-                                    }
-                                    else {
-                                      if (player === 1) { 
-                                      player = 2}
-                                      else {
-                                        player = 1}
-                                      
-                                    }
-                                  }
+        function checkWin(x, y){
+          checkDown(x, y);
+          checkLeft(x, y);
+          checkRight(x, y);
+          checkUR(x, y);
+          checkUL(x, y);
+          checkLL(x, y);
+          checkLR(x, y);
+            if (downCounter >= 4 || (leftCounter+rightCounter)-1 >= 4 || (urCounter + lrCounter)-1 >= 4 || (lrCounter + urCounter)-1 >= 4) {
+              console.log("Player " + player + " is the winner!");
+                }
+            else {
+            if (player === 1) {player = 2}
+            else {
+            player = 1}
+                }
+              }
+            }
+
 
     
